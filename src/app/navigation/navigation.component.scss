@@ -1,0 +1,20 @@
+.navigation {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    height: 15vh;
+    width: 90%;
+    margin: 0 auto;
+    padding: 10px 0px 15px 0px;
+    border-bottom: 1px solid #1E4466;
+  }
+  
+  button {
+    color: #ebebeb!important;
+    background-color: black!important;
+    outline: 2px solid #ebebeb;
+    outline-offset: -3px;
+    margin: 10px 0; /* Udaljenost među gumbevima */
+  }
+  
