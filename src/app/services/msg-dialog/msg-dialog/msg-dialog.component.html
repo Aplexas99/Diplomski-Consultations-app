@@ -1,0 +1,7 @@
+<mat-dialog-content>
+    <p *ngFor="let t of text"> {{ t }} </p>
+    <p class="countdown" *ngIf="data.autoClose">{{ 'This popup will close in {' + data.autoClose + '} seconds.' }}</p>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-flat-button mat-dialog-close color="accent">{{ 'Okay' }}</button>
+</mat-dialog-actions>
