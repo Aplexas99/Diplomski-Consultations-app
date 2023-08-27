@@ -1,11 +1,11 @@
 <mat-toolbar class="nav-bar mat-toolbar mat-toolbar-single-row">
-     Clubs
+     Courses
     <button mat-icon-button style="margin-left:15px;" (click)="loadCourses()">
         <mat-icon>refresh</mat-icon>
     </button>
     <button mat-raised-button color="accent" style="margin-left:30px;" (click)="loadCourses()"> Search </button>
     <div style="display: flex;margin-left:auto;">
-        <button style="margin-left: 10px" mat-raised-button color="primary"  ><mat-icon>add</mat-icon>Create a new course' </button>
+        <button style="margin-left: 10px" mat-raised-button class="primary-btn" (click)="openCreateForm()"><mat-icon>add</mat-icon>Create a new course</button>
     </div>
 </mat-toolbar>
 <table mat-table [dataSource]="dataSource" matSort>
@@ -25,15 +25,28 @@
     </ng-container>
     
     
-    <!-- Settings -->
-    <ng-container matColumnDef="settings">
-      <th mat-header-cell *matHeaderCellDef style="text-align:right;"></th>
-      <td mat-cell *matCellDef="let row" style="text-align:right;"></td>
-    </ng-container>
-    <ng-container matColumnDef="settings-filter-header">
-      <th mat-header-cell *matHeaderCellDef></th>
-    </ng-container>
-    
+<!-- Settings -->
+<ng-container matColumnDef="settings">
+  <th mat-header-cell *matHeaderCellDef="settings-filter-header" style="text-align:right;"></th>
+  <td mat-cell *matCellDef="let row" style="text-align:right;">
+      <button mat-icon-button [matMenuTriggerFor]="actionsMenu">
+          <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #actionsMenu>
+          <button mat-menu-item (click)="openEditForm(row)">
+              <mat-icon>edit</mat-icon>
+              <span>Edit</span>
+          </button>
+          <button mat-menu-item (click)="deleteCourse($event, row)">
+              <mat-icon>delete</mat-icon>
+              <span>Delete</span>
+          </button>
+      </mat-menu>
+  </td>
+</ng-container>
+<ng-container matColumnDef="settings-filter-header">
+  <th mat-header-cell *matHeaderCellDef></th>
+</ng-container>
     
     <tr mat-header-row *matHeaderRowDef="displayedColumns;"></tr>
     <tr mat-header-row *matHeaderRowDef="displayedSearchColumns;"></tr>

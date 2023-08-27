@@ -38,6 +38,27 @@ export class CourseService {
       };
     }));
   }
-
-
+  createCourse(course: Course) {
+    let params = {
+      name: course.name,
+    };
+    return this.http.post('courses', params).pipe(map((res: any) => {
+      return {
+        course: new Course(res.data),
+      }
+    }));
+  }
+  updateCourse(course: Course) {
+    let params = {
+      name: course.name,
+    };
+    return this.http.put('courses/' + course.id, params).pipe(map((res: any) => {
+      return {
+        course: new Course(res.data),
+      }
+    }));
+  }
+  deleteCourse(course: Course) {
+    return this.http.delete('courses/' + course.id);
+  }
 }

@@ -6,8 +6,9 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { HttpClientModule } from '@angular/common/http';
-
-
+import{MatIconModule} from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 @NgModule({
   declarations: [
     CoursesTableComponent,
@@ -19,7 +20,9 @@ import { HttpClientModule } from '@angular/common/http';
     MatPaginatorModule,
     MatSortModule,
     HttpClientModule,
-
+    MatIconModule,
+    MatDialogModule,
+    MatProgressBarModule,
   ]
 })
 export class AdminModuleModule { }

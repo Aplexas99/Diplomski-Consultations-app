@@ -6,6 +6,8 @@ import { Course } from 'src/app/models/course';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { CourseService } from '../service/course.service';
 import { SnackBarService } from 'src/app/services/snack-bar/snack-bar.service';
+import { MatDialog } from '@angular/material/dialog';
+import { CoursesFormComponent } from '../courses-form/courses-form.component';
 
 @Component({
   selector: 'app-courses-table',
@@ -35,6 +37,8 @@ export class CoursesTableComponent {
   constructor(
     public courseService: CourseService,
     public errorHandler: ErrorHandlerService,
+    public snackBar: SnackBarService,
+    public matDialog: MatDialog,
   ) {
   }
 
@@ -84,7 +88,49 @@ export class CoursesTableComponent {
       },
     });
   }
+
+  openCreateForm() {
+    this.matDialog.open(CoursesFormComponent, {
+      width: '600px',
+      data: {
+        course: null,
+      },
+      autoFocus: false,
+    }).afterClosed().subscribe((result) => {
+      if (result) {
+        this.loadCourses();
+      }
+    });
+  }
   
+  openEditForm(course: Course) {
+    this.matDialog.open(CoursesFormComponent, {
+      width: '600px',
+      data: {
+        course: course,
+      },
+      autoFocus: false,
+    }).afterClosed().subscribe((result) => {
+      if (result) {
+        this.loadCourses();
+      }
+    });
+  }
+  
+  deleteCourse(event: Event, course: Course) {
+    event.stopPropagation();
+    this.isLoading = true;
+    this.courseService.deleteCourse(course).subscribe({
+      next: () => {
+        this.snackBar.open('Course deleted successfully');
+        this.loadCourses();
+      },
+      error: (error:any) => {
+        this.isLoading = false;
+        this.errorHandler.process(error);
+      },
+    });
+  }
 }
 export interface CoursesTableFilter {
     name: string,

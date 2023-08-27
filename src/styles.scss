@@ -37,3 +37,10 @@ $diplomski-theme: mat.define-light-theme((
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; color: #ebebeb;}
+.primary-btn {   
+    color: #ebebeb!important;
+    background-color: black!important;
+    outline: 2px solid #ebebeb!important;
+    outline-offset: -3px!important;
+    margin: 10px 0;
+  }

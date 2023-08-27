@@ -1,1 +1,22 @@
-<p>courses-form works!</p>
+<div class="form">
+<h1 mat-dialog-title style="margin-bottom:5px;">
+    <span *ngIf="!data.course">Add New Course</span>
+    <span *ngIf="data.course">Edit Course</span>
+</h1>
+<div style="height:4px;margin-bottom:15px;">
+    <mat-progress-bar mode="query" style="width:100%;" *ngIf="isLoading"></mat-progress-bar>
+</div>
+
+<mat-dialog-content>
+    <mat-form-field>
+        <input matInput placeholder="Course Name" [(ngModel)]="course.name" name="name" required>
+    </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <div style="margin-left:auto;">
+        <button mat-button (click)="cancel()">Cancel</button>
+        <button mat-flat-button class="primary-btn" style="margin-left:10px;" (click)="save()" [disabled]="isLoading">Save</button>
+    </div>
+</mat-dialog-actions>
+</div>

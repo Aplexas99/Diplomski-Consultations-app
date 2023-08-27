@@ -20,6 +20,11 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSortModule} from '@angular/material/sort';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { CoursesFormComponent } from './admin-module/courses/courses-form/courses-form.component';
+import {MatMenuModule} from '@angular/material/menu';
+
+
 
 @NgModule({
   declarations: [
@@ -29,6 +34,7 @@ import {MatSortModule} from '@angular/material/sort';
     SnackBarComponent,
     MsgDialogComponent,
     CoursesTableComponent,
+    CoursesFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,6 +52,8 @@ import {MatSortModule} from '@angular/material/sort';
     HttpClientModule,
     MatToolbarModule,
     MatSortModule,
+    MatProgressBarModule,
+    MatMenuModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
