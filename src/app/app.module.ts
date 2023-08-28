@@ -23,7 +23,11 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { CoursesFormComponent } from './admin-module/courses/courses-form/courses-form.component';
 import {MatMenuModule} from '@angular/material/menu';
-
+import { UsersTableComponent } from './admin-module/users/users-table/users-table.component';
+import { UsersFormComponent } from './admin-module/users/users-form/users-form.component';
+import {MatOptionModule} from '@angular/material/core';
+import {MatSelectModule} from '@angular/material/select';
+import {MatDividerModule} from '@angular/material/divider';
 
 
 @NgModule({
@@ -35,6 +39,8 @@ import {MatMenuModule} from '@angular/material/menu';
     MsgDialogComponent,
     CoursesTableComponent,
     CoursesFormComponent,
+    UsersTableComponent,
+    UsersFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,6 +60,9 @@ import {MatMenuModule} from '@angular/material/menu';
     MatSortModule,
     MatProgressBarModule,
     MatMenuModule,
+    MatOptionModule,
+    MatSelectModule,
+    MatDividerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

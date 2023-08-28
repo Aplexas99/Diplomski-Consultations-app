@@ -1,0 +1,14 @@
+table {
+    width: 100%;
+    padding: 10px 20px 10px 20px;
+}
+.right-align {
+    margin-left: auto;
+}
+.delete-icon:hover {
+    color: #d0112b;
+    cursor: pointer;
+}
+tr:not(.mat-header-row):not(.mat-no-data-row):hover {
+    background: whitesmoke;
+}

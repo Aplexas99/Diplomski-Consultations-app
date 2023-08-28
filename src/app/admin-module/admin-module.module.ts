@@ -9,10 +9,16 @@ import { HttpClientModule } from '@angular/common/http';
 import{MatIconModule} from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { UsersTableComponent } from './users/users-table/users-table.component';
+import { UsersFormComponent } from './users/users-form/users-form.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+
 @NgModule({
   declarations: [
     CoursesTableComponent,
     CoursesFormComponent,
+    UsersTableComponent,
+    UsersFormComponent,
   ],
   imports: [
     CommonModule,
@@ -23,6 +29,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatIconModule,
     MatDialogModule,
     MatProgressBarModule,
+    MatToolbarModule,
+    MatTableModule,
   ]
 })
 export class AdminModuleModule { }

@@ -1,0 +1,45 @@
+<div class="form">
+    <h1 mat-dialog-title style="margin-bottom:5px;">
+        <span *ngIf="!data.user">Add New User</span>
+        <span *ngIf="data.user">Edit user</span>
+    </h1>
+    <div style="height:4px;margin-bottom:15px;">
+        <mat-progress-bar mode="query" style="width:100%;" *ngIf="isLoading"></mat-progress-bar>
+    </div>
+
+    <mat-dialog-content class="flex">
+        <div>
+            <mat-form-field>
+                <mat-label>First Name</mat-label>
+                <input matInput placeholder="First Name" [(ngModel)]="user.name" name="name" required>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <mat-label>Last Name</mat-label>
+                <input matInput placeholder="Last Name" [(ngModel)]="user.lastName" name="lastName" required>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="Email" [(ngModel)]="user.email" name="email" required>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <mat-label>Role</mat-label>
+                <mat-select name="role" [(ngModel)]="user.role" [compareWith]="compareModels">
+                    <mat-option *ngFor="let role of data.roles" [value]="role">{{role.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <div style="margin-left:auto;">
+            <button mat-button (click)="cancel()">Cancel</button>
+            <button mat-flat-button class="primary-btn" style="margin-left:10px;" (click)="save()"
+                [disabled]="isLoading">Save</button>
+        </div>
+    </mat-dialog-actions>
+</div>

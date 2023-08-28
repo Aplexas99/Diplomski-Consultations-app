@@ -1,0 +1,15 @@
+.flex{
+    
+    display:flex;
+    flex-direction:column;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+.flex>div {
+    flex: 1 0 50%;
+  }
+  
+  .flex>div:nth-child(2) {
+    flex: 100%;
+  }
+  
