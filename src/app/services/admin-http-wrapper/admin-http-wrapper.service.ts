@@ -1,4 +1,4 @@
-import { LocalStorageWrapperService } from './../local-storage-wrapper/local-storage-wrapper.service';
+import { LocalStorageWrapperService } from '../local-storage-wrapper/local-storage-wrapper.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
@@ -8,8 +8,8 @@ import { ErrorHandlerService } from '../error-handler/error-handler.service';
 @Injectable({
   providedIn: 'root'
 })
-export class HttpWrapperService {
-  apiUrl = "http://127.0.0.1:8000/api/";
+export class AdminHttpWrapperService {
+  apiUrl = "http://127.0.0.1:8000/admin/";
   headers!: {
     headers: HttpHeaders;
   };

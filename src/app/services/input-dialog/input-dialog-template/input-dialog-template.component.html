@@ -1,0 +1,18 @@
+<mat-dialog-content>{{ data.text | translate }}</mat-dialog-content>
+<div style="margin-top:20px;">
+    <form (submit)="confirm()">
+        <mat-form-field style="width:100%;">
+            <input matInput name="search-field" placeholder="{{ data.input.placeholder | translate }}" type="text" [(ngModel)]="input">
+        </mat-form-field>
+    </form>
+</div>
+<mat-dialog-actions>
+    <button mat-button tabindex="-1" (click)="cancel()">
+    <span *ngIf="data.cancelButtonText; else defaultCancel">{{ data.cancelButtonText | translate }}</span>
+    <ng-template #defaultCancel>{{ defaultCancelButtonText | translate }}</ng-template>
+  </button>
+    <button mat-flat-button color="accent" (click)="confirm()">
+    <span *ngIf="data.confirmButtonText; else defaultConfirm">{{ data.confirmButtonText | translate }}</span>
+    <ng-template #defaultConfirm>{{ defaultConfirmButtonText | translate }}</ng-template>
+  </button>
+</mat-dialog-actions>

@@ -6,7 +6,6 @@ export class Role {
     public set id(value: number | undefined) {
         this._id = value;
     }
-
     private _name?: string;
     public get name(): string | undefined {
         return this._name;
@@ -15,7 +14,6 @@ export class Role {
         this._name = value;
     }
 
-  
     constructor(data? : {
         id?: number,
         name?: string,

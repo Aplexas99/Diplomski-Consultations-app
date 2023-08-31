@@ -1,0 +1,100 @@
+$toolbar-height: 49px;
+mat-toolbar {
+    position: fixed;
+    z-index: 100;
+    height: $toolbar-height;
+    padding-left: 8px 16px;
+    background-color: #27282a;
+    color: white;
+    border-color: #e7e7e7;
+    border-width: 0 0 1px;
+    border: 1px solid transparent;
+    .logo-wrapper {
+        margin-left: 19px;
+        div {
+            display: flex;
+            img {
+                width: 150px;
+                margin-bottom: 3px;
+            }
+        }
+    }
+    .left-align {
+        margin-left: auto;
+    }
+    .storeware-links {
+        margin-left: 20px;
+        a {
+            font-size: 16px !important;
+            font-weight: 300 !important;
+        }
+
+        a:hover {
+            color:  #d93d5c !important;
+        }
+
+        .active {
+            color: #d93d5c !important;
+        }
+    }
+}
+
+.buttons-section {
+    display: flex;
+    margin: 50px 0;
+    padding-top: 21px;
+    .buttons-wrapper {
+        display: flex;
+        flex-direction: row;
+        max-width: 1400px;
+        width: 100%;
+        margin: 0 auto;
+        justify-content: space-around;
+        .button-wrapper {
+            button {
+                width: 200px;
+                height: 39px;
+                margin: 0 auto;
+                background: #27282a;
+                color: #fff;
+                box-shadow: none;
+                font-size: 18px;
+                mat-icon {
+                    scale: 1.2;
+                }
+            }
+        }
+    }
+}
+
+.mat-menu-item {
+    height: 25px;
+    line-height: 25px;
+    color: #d0112b;
+}
+
+.app-container {
+    // height: calc(100% - $toolbar-height);
+    padding-top: $toolbar-height;
+    overflow: auto;
+}
+
+@media screen and (max-width: 550px) {
+    .desktop-version {
+        display: none;
+    }
+    .mobile-version {
+        display: block;
+    }
+}
+
+@media print {
+    mat-toolbar {
+        display: none;
+    }
+    .app-container {
+        height: 100vh;
+        height: auto;
+        padding-top: 0;
+    }
+}
