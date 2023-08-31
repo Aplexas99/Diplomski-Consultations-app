@@ -1,0 +1,12 @@
+<h2>{{ 'Please confirm' | translate }}</h2>
+<mat-dialog-content>{{ data.text | translate }}</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button mat-dialog-close tabindex="-1">
+    <span *ngIf="data.cancelButtonText; else defaultCancel">{{ data.cancelButtonText | translate }}</span>
+    <ng-template #defaultCancel>{{ defaultCancelButtonText | translate }}</ng-template>
+  </button>
+    <button mat-flat-button color="accent" (click)="confirm()">
+    <span *ngIf="data.confirmButtonText; else defaultConfirm">{{ data.confirmButtonText | translate }}</span>
+    <ng-template #defaultConfirm>{{ defaultConfirmButtonText | translate }}</ng-template>
+  </button>
+</mat-dialog-actions>
