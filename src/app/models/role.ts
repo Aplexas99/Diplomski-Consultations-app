@@ -6,24 +6,24 @@ export class Role{
     public set id(value: number | undefined) {
         this._id = value;
     }
-    private _role?: string;
-    public get role(): string | undefined {
-        return this._role;
+    private _name?: string;
+    public get name(): string | undefined {
+        return this._name;
     }
-    public set role(value: string | undefined) {
-        this._role = value;
+    public set name(value: string | undefined) {
+        this._name = value;
     }
 
 
     constructor(data?: {
         id?: number,
-        role?: string
+        name?: string
     } | Role) {
         if(!(data instanceof Role)) {
             if(data?.id)
                 this.id = data.id;
-            if(data?.role)
-                this.role = data.role;
+            if(data?.name)
+                this.name = data.name;
         }
     }
 }

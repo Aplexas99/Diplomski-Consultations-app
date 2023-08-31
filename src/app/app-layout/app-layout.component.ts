@@ -2,6 +2,8 @@ import { ErrorHandlerService } from './../services/error-handler/error-handler.s
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../login/auth.service';
+import { HttpClient } from '@angular/common/http';
+import { LoggedInUserService } from '../services/logged-in-user/logged-in-user.service';
 @Component({
   selector: 'app-app-layout',
   templateUrl: './app-layout.component.html',
@@ -14,17 +16,16 @@ export class AppLayoutComponent implements OnInit {
     public router: Router,
     public errorHandler: ErrorHandlerService,
     public route: ActivatedRoute,
+    public loggedInUser: LoggedInUserService,
   ) {}
 
-  ngOnInit() { }
+
+  ngOnInit() {
+   }
 
   logout() {
     this.authService.logout().subscribe();
     this.router.navigate([ '/login' ]);
   }
 
-}
-export class MatMenuListItem {
-  id: number | undefined;
-  name: string | undefined;
 }

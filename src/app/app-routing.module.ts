@@ -6,6 +6,8 @@ import { UsersTestComponent } from './users-test/users-test.component';
 import { LoginComponent } from './login/login.component';
 import { AppComponent } from './app.component';
 import { AppLayoutComponent } from './app-layout/app-layout.component';
+import { AdminAuthGuard } from './auth-guard/admin-auth.guard';
+import { AdminLoginComponent } from './login/adminLogin/admin-login.component';
 
 const routes: Routes = [
   {
@@ -18,8 +20,17 @@ const routes: Routes = [
     component: LoginComponent,
   },
   {
+    path:'admin/login',
+    component: AdminLoginComponent,
+  },
+  {
     path:'app',
     canActivate: [AuthGuard],
+    component: AppLayoutComponent,
+  },
+  {
+    path:'admin',
+    canActivate: [AdminAuthGuard],
     component: AppLayoutComponent,
     children: [
       {

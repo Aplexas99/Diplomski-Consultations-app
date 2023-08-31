@@ -25,6 +25,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AppLayoutComponent } from './app-layout/app-layout.component';
+import { AdminLoginComponent } from './login/adminLogin/admin-login.component';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { AppLayoutComponent } from './app-layout/app-layout.component';
     InputDialogTemplateComponent,
     ConfirmDialogTemplateComponent,
     AppLayoutComponent,
+    AdminLoginComponent,
   ],
   imports: [
     BrowserModule,

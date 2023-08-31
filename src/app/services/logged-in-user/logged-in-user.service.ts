@@ -36,7 +36,6 @@ export class LoggedInUserService {
         last_name: string,
         email: string,
         role: Role,
-        cost_center: any,
       }
     }): User => {
       this._user = new User(result.data);

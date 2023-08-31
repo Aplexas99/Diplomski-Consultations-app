@@ -1,14 +1,13 @@
-import { LocalStorageWrapperService } from './../services/local-storage-wrapper/local-storage-wrapper.service';
+import { LocalStorageWrapperService } from '../services/local-storage-wrapper/local-storage-wrapper.service';
 import { Injectable } from '@angular/core';
 import { HttpWrapperService } from '../services/http-wrapper/http-wrapper.service';
 import { map } from 'rxjs/operators';
 import { LoggedInUserService } from '../services/logged-in-user/logged-in-user.service';
-import { Role } from '../models/role';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class AdminAuthService {
 
   constructor(
     public http: HttpWrapperService,
@@ -21,8 +20,8 @@ export class AuthService {
       email_or_username: emailOrUsername,
       password: password
     };
-    return this.http.post('login', { data: data }).pipe(map((result: { data: { api_token: string, is_admin: boolean}}) => {
-        this.setSession(result.data.api_token);
+    return this.http.post('admin/login', { data: data }).pipe(map((result: { data: { admin_api_token: string, is_admin: boolean}}) => {
+        this.setSession(result.data.admin_api_token);
       }));
   }
 

@@ -1,0 +1,21 @@
+<div style="display:flex; flex-direction:column; height:100vh; background:whitesmoke;">
+    <mat-card class="mat-elevation-z6" style="margin:auto;">
+        <h1>{{ 'Login to ProApp - Admin' | translate }}</h1>
+        <form #loginForm="ngForm" (submit)="onSubmit()">
+            <mat-form-field>
+                <input type="text" name="emailOrUsername" matInput placeholder="{{ 'Email / Username' | translate }}" [(ngModel)]="emailOrUsername" required>
+                <mat-error *ngIf="loginForm.controls['emailOrUsername']?.errors?.['required']"> {{ 'Email or username is required.' | translate }} </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <input type="password" name="password" matInput placeholder="{{ 'Password' | translate }}" [(ngModel)]="password" required>
+                <mat-error *ngIf="loginForm.controls['password']?.errors?.['required']"> {{ 'Password is required.' | translate }} </mat-error>
+            </mat-form-field>
+            <button mat-raised-button color="primary" type="submit" [disabled]="isLoading">{{ 'Log in' | translate }}</button>
+        </form>
+        <!--
+        <div style="text-align:center; margin-top:20px;">
+            <a mat-button routerLink="/forgot-password" type="button"> {{ 'Forgot password' | translate }}</a>
+        </div>
+        -->
+    </mat-card>
+</div>
