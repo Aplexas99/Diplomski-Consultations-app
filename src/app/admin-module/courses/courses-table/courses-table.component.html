@@ -33,6 +33,10 @@
           <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #actionsMenu>
+          <button mat-menu-item (click)="openCourseDetails(row)">
+              <mat-icon>visibility</mat-icon>
+              <span>View</span>
+          </button>
           <button mat-menu-item (click)="openEditForm(row)">
               <mat-icon>edit</mat-icon>
               <span>Edit</span>

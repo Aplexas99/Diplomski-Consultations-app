@@ -42,7 +42,6 @@ export class UsersService {
       };
     }));
   }
-
   
   createUser(user: User) {
     let params = {

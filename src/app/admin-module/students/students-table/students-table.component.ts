@@ -1,35 +1,31 @@
 import { Component, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { User } from 'src/app/models/user';
+import { Student } from 'src/app/models/student';
+import { StudentsService } from '../service/students.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { SnackBarService } from 'src/app/services/snack-bar/snack-bar.service';
-import { UsersService } from '../service/users.service';
-import { UsersFormComponent } from '../users-form/users-form.component';
-import { Role } from 'src/app/models/role';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { UsersFormComponent } from '../../users/users-form/users-form.component';
 
 
 @Component({
-  selector: 'app-users-table',
-  templateUrl: './users-table.component.html',
-  styleUrls: ['./users-table.component.scss']
+  selector: 'app-students-table',
+  templateUrl: './students-table.component.html',
+  styleUrls: ['./students-table.component.scss']
 })
-export class UsersTableComponent {
+export class StudentsTableComponent {
 
   isLoading: boolean = false;
-  displayedColumns: string[] = ['name', 'last-name','email','role','settings'];
-  dataSource!: MatTableDataSource<User>;
-  displayedSearchColumns: string[] = ['search-by-name', 'search-by-last-name','search-by-email','search-by-role', 'settings-filter-header'];
+  displayedColumns: string[] = ['name','jmbag','settings'];
+  dataSource!: MatTableDataSource<Student>;
+  displayedSearchColumns: string[] = ['search-by-name','search-by-jmbag', 'settings-filter-header'];
 
-  roles: Role[] = [];
-
-  filter: UsersTableFilter = {
+  filter: StudentsTableFilter = {
     name: '',
-    lastName: '',
-    email: '',
-    role: '',
+    jmbag: '',
   };
   
   pagination = {
@@ -42,15 +38,15 @@ export class UsersTableComponent {
   @ViewChild(MatSort) sort?: MatSort;
   
   constructor(
-    public usersService: UsersService,
+    public studentService: StudentsService,
     public errorHandler: ErrorHandlerService,
     public snackBar: SnackBarService,
     public matDialog: MatDialog,
+    private router: Router,
   ) {
   }
 
   ngOnInit(): void {
-    this.loadRoles();
   }
   ngAfterViewInit(): void {
     
@@ -58,13 +54,13 @@ export class UsersTableComponent {
       if (this.paginator) {
         this.paginator.pageIndex = 0;
       }
-      this.loadUsers();
+      this.loadStudents();
     });
 
 
     this.paginator?.page.subscribe(() => {
       window.scroll(0, 0);
-      this.loadUsers();
+      this.loadStudents();
     });
 
     setTimeout(() => {
@@ -74,9 +70,9 @@ export class UsersTableComponent {
     });
   }
 
-  loadUsers() {
+  loadStudents() {
     this.isLoading = true;
-    this.usersService.getUsers(
+    this.studentService.getStudents(
       {
         filter: this.filter,
         perPage: this.paginator ? this.paginator.pageSize : this.pagination.defaultPageSize,
@@ -85,7 +81,7 @@ export class UsersTableComponent {
         sortDirection: this.sort ? this.sort.direction : 'asc',    }
     ).subscribe({
       next: (data:any) => {
-        this.dataSource = new MatTableDataSource(data.users);
+        this.dataSource = new MatTableDataSource(data.students);
         this.pagination.totalResults = data.meta.total;
         this.isLoading = false;
       },
@@ -96,73 +92,43 @@ export class UsersTableComponent {
     });
   }
 
-  openCreateForm() {
-    this.matDialog.open(UsersFormComponent, {
-      width: '600px',
-      data: {
-        user: null,
-        roles: this.roles,
-        isUser: true,
-      },
-      autoFocus: false,
-    }).afterClosed().subscribe((result) => {
-      if (result) {
-        this.loadUsers();
-      }
-    });
-  }
-  
-  openEditForm(user: User) {
-    this.matDialog.open(UsersFormComponent, {
-      width: '600px',
-      data: {
-        user: user,
-        roles: this.roles,
-        isUser: true,
-      },
-      autoFocus: false,
-      disableClose: true,
-    }).afterClosed().subscribe((result) => {
-      if (result) {
-        this.loadUsers();
-      }
-    });
-  }
-  
-  deleteUser(event: Event, user: User) {
-    event.stopPropagation();
-    this.isLoading = true;
-    this.usersService.deleteUser(user).subscribe({
-      next: () => {
-        this.snackBar.open('User deleted successfully',
-        { duration: 3000});
-        this.loadUsers();
-      },
-      error: (error:any) => {
-        this.isLoading = false;
-        this.errorHandler.process(error);
-      },
-    });
+  openStudentDetails(student: Student) {
+    this.router.navigate(['/students/'+ student.id]);
   }
 
-  loadRoles() {
+  
+  openEditForm(student: Student) {
+    this.matDialog.open(UsersFormComponent, {
+      width: '600px',
+      data: {
+        user: student.user,
+        roles: [],
+        isUser: false,
+        jmbag: student.jmbag,
+        student: student,
+      },
+      autoFocus: false,
+    }).afterClosed().subscribe((res) => {
+        this.loadStudents();
+    });
+  }
+  
+  deleteStudent(event: Event, student: Student) {
+    event.stopPropagation();
     this.isLoading = true;
-    this.usersService.getRoles().subscribe({
-      next: (data:any) => {
-        this.roles = data.roles;
-        this.isLoading = false;
+    this.studentService.deleteStudent(student).subscribe({
+      next: () => {
+        this.snackBar.open('Student deleted successfully');
+        this.loadStudents();
       },
       error: (error:any) => {
         this.isLoading = false;
         this.errorHandler.process(error);
-      }
+      },
     });
   }
 }
-export interface UsersTableFilter {
+export interface StudentsTableFilter {
     name: string,
-    lastName: string,
-    email: string,
-    role: string,
+    jmbag: string,
   };
-

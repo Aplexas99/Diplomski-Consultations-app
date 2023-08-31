@@ -1,35 +1,31 @@
 import { Component, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { User } from 'src/app/models/user';
+import { Professor } from 'src/app/models/professor';
+import { ProfessorsService } from '../service/professors.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { SnackBarService } from 'src/app/services/snack-bar/snack-bar.service';
-import { UsersService } from '../service/users.service';
-import { UsersFormComponent } from '../users-form/users-form.component';
-import { Role } from 'src/app/models/role';
-
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { ProfessorsFormComponent } from '../professors-form/professors-form.component';
 
 @Component({
-  selector: 'app-users-table',
-  templateUrl: './users-table.component.html',
-  styleUrls: ['./users-table.component.scss']
+  selector: 'app-professors-table',
+  templateUrl: './professors-table.component.html',
+  styleUrls: ['./professors-table.component.scss']
 })
-export class UsersTableComponent {
+export class ProfessorsTableComponent {
 
   isLoading: boolean = false;
-  displayedColumns: string[] = ['name', 'last-name','email','role','settings'];
-  dataSource!: MatTableDataSource<User>;
-  displayedSearchColumns: string[] = ['search-by-name', 'search-by-last-name','search-by-email','search-by-role', 'settings-filter-header'];
+  displayedColumns: string[] = ['name', 'last-name','email','settings'];
+  dataSource!: MatTableDataSource<Professor>;
+  displayedSearchColumns: string[] = ['search-by-name', 'search-by-last-name','search-by-email', 'settings-filter-header'];
 
-  roles: Role[] = [];
-
-  filter: UsersTableFilter = {
+  filter: ProfessorsTableFilter = {
     name: '',
     lastName: '',
     email: '',
-    role: '',
   };
   
   pagination = {
@@ -42,15 +38,15 @@ export class UsersTableComponent {
   @ViewChild(MatSort) sort?: MatSort;
   
   constructor(
-    public usersService: UsersService,
+    public professorsService: ProfessorsService,
     public errorHandler: ErrorHandlerService,
     public snackBar: SnackBarService,
     public matDialog: MatDialog,
+    private router: Router,
   ) {
   }
 
   ngOnInit(): void {
-    this.loadRoles();
   }
   ngAfterViewInit(): void {
     
@@ -58,13 +54,13 @@ export class UsersTableComponent {
       if (this.paginator) {
         this.paginator.pageIndex = 0;
       }
-      this.loadUsers();
+      this.loadProfessors();
     });
 
 
     this.paginator?.page.subscribe(() => {
       window.scroll(0, 0);
-      this.loadUsers();
+      this.loadProfessors();
     });
 
     setTimeout(() => {
@@ -74,9 +70,9 @@ export class UsersTableComponent {
     });
   }
 
-  loadUsers() {
+  loadProfessors() {
     this.isLoading = true;
-    this.usersService.getUsers(
+    this.professorsService.getProfessors(
       {
         filter: this.filter,
         perPage: this.paginator ? this.paginator.pageSize : this.pagination.defaultPageSize,
@@ -85,7 +81,7 @@ export class UsersTableComponent {
         sortDirection: this.sort ? this.sort.direction : 'asc',    }
     ).subscribe({
       next: (data:any) => {
-        this.dataSource = new MatTableDataSource(data.users);
+        this.dataSource = new MatTableDataSource(data.professors);
         this.pagination.totalResults = data.meta.total;
         this.isLoading = false;
       },
@@ -96,73 +92,47 @@ export class UsersTableComponent {
     });
   }
 
-  openCreateForm() {
-    this.matDialog.open(UsersFormComponent, {
-      width: '600px',
+  openEditForm(professor: Professor) {
+    this.matDialog.open(ProfessorsFormComponent, {
       data: {
-        user: null,
-        roles: this.roles,
-        isUser: true,
+        professor: professor,
       },
-      autoFocus: false,
-    }).afterClosed().subscribe((result) => {
-      if (result) {
-        this.loadUsers();
-      }
-    });
-  }
-  
-  openEditForm(user: User) {
-    this.matDialog.open(UsersFormComponent, {
       width: '600px',
-      data: {
-        user: user,
-        roles: this.roles,
-        isUser: true,
-      },
-      autoFocus: false,
-      disableClose: true,
-    }).afterClosed().subscribe((result) => {
-      if (result) {
-        this.loadUsers();
-      }
-    });
-  }
-  
-  deleteUser(event: Event, user: User) {
-    event.stopPropagation();
-    this.isLoading = true;
-    this.usersService.deleteUser(user).subscribe({
-      next: () => {
-        this.snackBar.open('User deleted successfully',
-        { duration: 3000});
-        this.loadUsers();
+    }).afterClosed().subscribe({
+      next: (res) => {
+        if(res){
+          this.loadProfessors();
+        }
+        this.isLoading = false;
       },
       error: (error:any) => {
         this.isLoading = false;
         this.errorHandler.process(error);
-      },
+      }
     });
   }
 
-  loadRoles() {
+  openProfessorsDetails(professor: Professor) {
+    this.router.navigate(['/professors/'+ professor.id]);
+  }
+  
+  deleteProfessor(event: Event, professor: Professor) {
+    event.stopPropagation();
     this.isLoading = true;
-    this.usersService.getRoles().subscribe({
-      next: (data:any) => {
-        this.roles = data.roles;
-        this.isLoading = false;
+    this.professorsService.deleteProfessor(professor).subscribe({
+      next: () => {
+        this.snackBar.open('Professor deleted successfully');
+        this.loadProfessors();
       },
       error: (error:any) => {
         this.isLoading = false;
         this.errorHandler.process(error);
-      }
+      },
     });
   }
 }
-export interface UsersTableFilter {
+export interface ProfessorsTableFilter {
     name: string,
     lastName: string,
     email: string,
-    role: string,
   };
-

@@ -27,12 +27,20 @@
             </mat-form-field>
         </div>
         <div>
-            <mat-form-field>
+            <mat-form-field *ngIf="isUser">
                 <mat-label>Role</mat-label>
                 <mat-select name="role" [(ngModel)]="user.role" [compareWith]="compareModels">
                     <mat-option *ngFor="let role of data.roles" [value]="role">{{role.name}}</mat-option>
                 </mat-select>
             </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field *ngIf="user.role?.name == 'Student'">
+                <mat-label>JMBAG</mat-label>
+                <input *ngIf="!data.student" matInput type="number" placeholder="JMBAG" [(ngModel)]="jmbag" name="jmbag" required>
+                <input *ngIf="data.student" matInput type="number" placeholder="JMBAG" [(ngModel)]="data.student.jmbag" name="jmbag" required>
+            </mat-form-field>
+
         </div>
     </mat-dialog-content>
     <mat-dialog-actions>

@@ -1,0 +1,24 @@
+<div class="form">
+    <h1 mat-dialog-title style="margin-bottom:5px;">
+        <span>Assign new professor to the course</span>
+    </h1>
+    <div style="height:4px;margin-bottom:15px;">
+        <mat-progress-bar mode="query" style="width:100%;" *ngIf="isLoading"></mat-progress-bar>
+    </div>
+    
+    <mat-dialog-content>
+        <mat-form-field>
+            <mat-label for="professor">Professor</mat-label>
+            <mat-select name="professor" [(ngModel)]="professor" [compareWith]="compareModels">
+                <mat-option *ngFor="let professor of professors" [value]="professor">{{professor.user?.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </mat-dialog-content>
+    
+    <mat-dialog-actions>
+        <div style="margin-left:auto;">
+            <button mat-button (click)="cancel()">Cancel</button>
+            <button mat-flat-button class="primary-btn" style="margin-left:10px;" (click)="save()" [disabled]="isLoading">Save</button>
+        </div>
+    </mat-dialog-actions>
+    </div>
