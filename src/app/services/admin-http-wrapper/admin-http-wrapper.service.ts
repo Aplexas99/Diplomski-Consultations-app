@@ -9,7 +9,7 @@ import { ErrorHandlerService } from '../error-handler/error-handler.service';
   providedIn: 'root'
 })
 export class AdminHttpWrapperService {
-  apiUrl = "http://127.0.0.1:8000/admin/";
+  apiUrl = "http://127.0.0.1:8000/api/admin/";
   headers!: {
     headers: HttpHeaders;
   };
@@ -17,7 +17,15 @@ export class AdminHttpWrapperService {
   constructor(
     public http: HttpClient,
     public errorHandler: ErrorHandlerService,
-  ) {}
+    public localStorage: LocalStorageWrapperService,
+  ) {
+    let apiToken = this.localStorage.get('api_token');
+    this.headers = {
+      headers: new HttpHeaders({ 
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + apiToken,
+   })};
+  }
 
   setApiToken(apiToken: string) {
     this.headers = {

@@ -17,14 +17,22 @@ export class HttpWrapperService {
   constructor(
     public http: HttpClient,
     public errorHandler: ErrorHandlerService,
-  ) {}
+    public localStorage: LocalStorageWrapperService,
+  ) {
+    let apiToken = this.localStorage.get('api_token');
+    this.headers = {
+      headers: new HttpHeaders({ 
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + apiToken,
+   })};
+  }
 
   setApiToken(apiToken: string) {
     this.headers = {
-      headers: new HttpHeaders({
-        Authorization: 'Bearer ' + apiToken
-      })
-    };
+      headers: new HttpHeaders({ 
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + apiToken,
+   })};
   }
 
   getRaw(url: string, headers?: HttpHeaders | {

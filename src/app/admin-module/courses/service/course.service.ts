@@ -8,15 +8,27 @@ import { SortDirection } from '@angular/material/sort';
 import { Professor } from 'src/app/models/professor';
 import { Student } from 'src/app/models/student';
 import { CourseStudent } from 'src/app/models/courseStudent';
+import { AdminHttpWrapperService } from 'src/app/services/admin-http-wrapper/admin-http-wrapper.service';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { LoggedInUserService } from 'src/app/services/logged-in-user/logged-in-user.service';
+import { LocalStorageWrapperService } from 'src/app/services/local-storage-wrapper/local-storage-wrapper.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CourseService {
 
+  apiToken: string = '';
   constructor(
-    private http: HttpWrapperService,
-  ) { }
+    private http: AdminHttpWrapperService,
+    private httpClient: HttpClient,
+    private httpWrapper: HttpWrapperService,
+    private localStorage: LocalStorageWrapperService,
+  ) { 
+    
+     this.apiToken = this.localStorage.get('api_token');
+  }
+
 
   getCourses(    
     data: {
@@ -118,12 +130,13 @@ export class CourseService {
       sort_by: data.sortBy,
       sort_direction: data.sortDirection,
     };
-      return this.http.get('student/'+student.id+'/courses', {params: params}).pipe(map((res: {data: any[], meta: MetaPagination}) => {
-        let coursesStudent: CourseStudent[] = res.data.map(course => new CourseStudent(course));
-        return {
-          coursesStudent: coursesStudent,
-          meta: res.meta,
-        };
-      }));
+
+    return this.httpWrapper.get('student/'+student.id+'/courses', {params: params}).pipe(map((res: {data: any[], meta: MetaPagination}) => {
+      let courses: CourseStudent[] = res.data.map(courseStudent => new CourseStudent(courseStudent));
+      return {
+        coursesStudent: courses,
+        meta: res.meta,
+      };
+    }));
   }
 }

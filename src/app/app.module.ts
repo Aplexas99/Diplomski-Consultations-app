@@ -41,12 +41,13 @@ import { LoginComponent } from './login/login.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { ConfirmDialogTemplateComponent } from './services/confirm-dialog/confirm-dialog-template/confirm-dialog-template.component';
 import { InputDialogTemplateComponent } from './services/input-dialog/input-dialog-template/input-dialog-template.component';
-import { MsgDialogTemplateComponent } from './services/msg-dialog/msg-dialog-template/msg-dialog-template.component';
 import { SnackBarComponent } from './services/snack-bar/snack-bar/snack-bar.component';
 import { TranslatePipe } from './services/translations/translate.pipe';
 import { UsersTestComponent } from './users-test/users-test.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
+import { MsgDialogComponent } from './services/msg-dialog/msg-dialog/msg-dialog.component';
+import { AdminLayoutComponent } from './admin-module/admin-layout/admin-layout.component';
 
 
 
@@ -72,12 +73,13 @@ import { MatCardModule } from '@angular/material/card';
     UsersTestComponent,
     LoginComponent,
     SnackBarComponent,
-    MsgDialogTemplateComponent,
+    MsgDialogComponent,
     TranslatePipe,
     InputDialogTemplateComponent,
     ConfirmDialogTemplateComponent,
     AppLayoutComponent,
     AdminLoginComponent,
+    AdminLayoutComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,10 +1,9 @@
 <mat-toolbar class="nav-bar mat-toolbar mat-toolbar-single-row">
-    Courses
+    My Courses
    <button mat-icon-button style="margin-left:15px;" (click)="loadCourses()">
        <mat-icon>refresh</mat-icon>
    </button>
-   <button mat-raised-button color="accent" style="margin-left:30px;" (click)="loadCourses()"> Search </button>
-</mat-toolbar>
+  </mat-toolbar>
 <table mat-table [dataSource]="dataSource" matSort>
 
    <ng-container matColumnDef="name">

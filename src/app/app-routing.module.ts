@@ -13,46 +13,20 @@ import { AuthGuard } from './auth-guard/auth.guard';
 import { MyCoursesTableComponent } from './courses/my-courses-table/my-courses-table.component';
 import { AdminLoginComponent } from './login/adminLogin/admin-login.component';
 import { UsersTestComponent } from './users-test/users-test.component';
+import { AdminLayoutComponent } from './admin-module/admin-layout/admin-layout.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   {
-    path: 'courses',
-    component: CoursesTableComponent,
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full',
   },
   {
-    path: 'courses/:id',
-    component: CourseDetailsComponent,
+    path:'login',
+    component: LoginComponent,
   },
   {
-    path: 'users',
-    component: UsersTableComponent,
-  },
-  {
-    path: 'professors',
-    component: ProfessorsTableComponent,
-  },
-  {
-    path: 'professors/:id',
-    component: ProfessorsDetailsComponent,
-  },
-  {
-    path: 'students',
-    component: StudentsTableComponent,
-  },
-  {
-    path: 'students/:id',
-    component: StudentDetailsComponent,
-  },
-  {
-    path: 'my-courses',
-    component: MyCoursesTableComponent,
-  },
-  {
-    path: 'student/courses/:id',
-    component: CourseDetailsComponent,
-  },
-  {
-
     path: 'admin/login',
     component: AdminLoginComponent,
   },
@@ -60,16 +34,61 @@ const routes: Routes = [
     path: 'app',
     canActivate: [AuthGuard],
     component: AppLayoutComponent,
+    children: [
+       {
+        path: 'student',
+        canActivate: [],
+        component: MyCoursesTableComponent,
+        children: [
+        ],
+       },
+       {
+        path: 'professor',
+        canActivate: [],
+        component: MyCoursesTableComponent,
+        children: [
+        ],
+       }
+      ],
   },
   {
     path: 'admin',
     canActivate: [AdminAuthGuard],
-    component: AppLayoutComponent,
+    component: AdminLayoutComponent,
     children: [
-      {
-        path: 'users',
-        component: UsersTestComponent,
-      },
+        {
+          path: 'courses',
+          component: CoursesTableComponent,
+        },
+        {
+          path: 'courses/:id',
+          component: CourseDetailsComponent,
+        },
+        {
+          path: 'users',
+          component: UsersTableComponent,
+        },
+        {
+          path: 'professors',
+          component: ProfessorsTableComponent,
+        },
+        {
+          path: 'professors/:id',
+          component: ProfessorsDetailsComponent,
+        },
+        {
+          path: 'students',
+          component: StudentsTableComponent,
+        },
+        {
+          path: 'students/:id',
+          component: StudentDetailsComponent,
+        },
+        
+  {
+    path: 'student/courses/:id',
+    component: CourseDetailsComponent,
+  },
     ]
   },
 ];

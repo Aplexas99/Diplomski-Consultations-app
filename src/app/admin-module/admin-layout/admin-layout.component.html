@@ -1,0 +1,23 @@
+<ng-container>
+    <mat-toolbar class="nav-bar mat-toolbar mat-toolbar-single-row">
+        <a class="logo-wrapper" routerLink="/app">
+            <div> <img src="assets/logo.png"> </div>
+       </a>
+
+        <div class="left-align">
+            <button mat-button class="logout-btn" (click)="logout()"><mat-icon style="scale:1.3;">power_settings_new</mat-icon></button>
+        </div>
+    </mat-toolbar>
+
+    <div class="app-container">
+        <div class="buttons-section">
+            <div class="buttons-wrapper">
+                <button mat-raised-button class="btn" routerLink="/ruta1">Ruta 1</button>
+                <button mat-raised-button class="btn" routerLink="/ruta2">Ruta 2</button>
+                <button mat-raised-button class="btn" routerLink="/ruta3">Ruta 3</button>
+            </div>
+        </div>
+    </div>
+
+        <router-outlet></router-outlet>
+</ng-container>

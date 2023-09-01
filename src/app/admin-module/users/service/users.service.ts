@@ -6,6 +6,7 @@ import { map } from 'rxjs';
 import { MetaPagination } from 'src/app/models/meta-pagination';
 import { User } from 'src/app/models/user';
 import { Role } from 'src/app/models/role';
+import { AdminHttpWrapperService } from 'src/app/services/admin-http-wrapper/admin-http-wrapper.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ import { Role } from 'src/app/models/role';
 export class UsersService {
 
   constructor(
-    private http: HttpWrapperService,
+    private http: AdminHttpWrapperService,
   ) { }
 
   getUsers(    
