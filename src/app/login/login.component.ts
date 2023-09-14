@@ -37,7 +37,20 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     if(this.loginForm.valid && this.emailOrUsername && this.password) {
       this.isLoading = true;
-      this.snackBar.open('Logging in...');
+      this.snackBar.open('Prijavljujem se...');
+      /*
+      this.authService.loginGoogle().subscribe({
+        next: (res) => {
+          this.isLoading = false;
+          this.snackBar.dismiss();
+          console.log(res);
+        },
+        error: (error) => {
+          this.isLoading = false;
+          this.errorHandler.process(error);
+        },
+      });
+      */
       this.authService.login(this.emailOrUsername, this.password)
         .pipe(
           tap(_ => this.authService.setSession()),
@@ -47,13 +60,22 @@ export class LoginComponent implements OnInit {
           next: (user) => {
             this.isLoading = false;
             this.snackBar.dismiss();
-              this.router.navigate([ '/app' ]);
+             
+    this.authService.getGoogleAuthUrl().subscribe({
+      next: (res) => {
+        window.open(res, "_self");
+      },
+      error: (err) => {
+        this.errorHandler.handleError(err);
+      }
+    });
           },
           error: (error) => {
             this.isLoading = false;
             this.errorHandler.process(error);
           },
         });
+        
     }
   }
 

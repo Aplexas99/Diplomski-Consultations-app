@@ -40,6 +40,22 @@ export class User {
     public set role(value: Role | undefined) {
         this._role = value;
     }
+
+    private _professorId?: number;
+    public get professorId(): number | undefined {
+        return this._professorId;
+    }
+    public set professorId(value: number | undefined) {
+        this._professorId = value;
+    }
+
+    private _studentId?: number;
+    public get studentId(): number | undefined {
+        return this._studentId;
+    }
+    public set studentId(value: number | undefined) {
+        this._studentId = value;
+    }
   
     constructor(data? : {
         id?: number,
@@ -48,6 +64,10 @@ export class User {
         last_name?: string,
         email?: string,
         role?: Role,
+        professorId?: number,
+        professor_id?: number,
+        studentId?: number,
+        student_id?: number,
     } | User) {
         if(data) {
             if(data.id) {
@@ -65,9 +85,21 @@ export class User {
             if(data.role) {
                 this._role = new Role(data.role);
             }
+            if(data.professorId) {
+                this.professorId = data.professorId;
+            }
+            if(data.studentId) {
+                this.studentId = data.studentId;
+            }
             if(!(data instanceof User)) {
                 if(data.last_name) {
                     this.lastName = data.last_name;
+                }
+                if(data.professor_id) {
+                    this.professorId = data.professor_id;
+                }
+                if(data.student_id) {
+                    this.studentId = data.student_id;
                 }
             }
         }

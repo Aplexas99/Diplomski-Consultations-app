@@ -12,6 +12,7 @@ import { AdminHttpWrapperService } from 'src/app/services/admin-http-wrapper/adm
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { LoggedInUserService } from 'src/app/services/logged-in-user/logged-in-user.service';
 import { LocalStorageWrapperService } from 'src/app/services/local-storage-wrapper/local-storage-wrapper.service';
+import { User } from 'src/app/models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,6 @@ export class CourseService {
   apiToken: string = '';
   constructor(
     private http: AdminHttpWrapperService,
-    private httpClient: HttpClient,
     private httpWrapper: HttpWrapperService,
     private localStorage: LocalStorageWrapperService,
   ) { 
@@ -54,7 +54,7 @@ export class CourseService {
     }));
   }
   getCourse(id: number) {
-    return this.http.get('courses/' + id).pipe(map((res: any) => {
+    return this.httpWrapper.get('courses/' + id).pipe(map((res: any) => {
       return {
         course: new Course(res.data),
       }
@@ -90,7 +90,7 @@ export class CourseService {
   }
 
   getProfessors() {
-    return this.http.get('professors').pipe(map((res: { data: any[]}) => {
+    return this.httpWrapper.get('professors').pipe(map((res: { data: any[]}) => {
       let professors: Professor[] = res.data.map(professor => new Professor(professor));
       return {
         professors: professors,
@@ -114,7 +114,7 @@ export class CourseService {
     }));
   }
   
-  getCoursesByStudent(student: Student,
+  getCoursesForLoggedInUser(
     data: {
       filter: CoursesTableFilter,
       perPage: number,
@@ -126,15 +126,14 @@ export class CourseService {
       per_page: data.perPage,
       page: data.pageIndex,
       name: data.filter.name,
-      jmbag: student.jmbag,
       sort_by: data.sortBy,
       sort_direction: data.sortDirection,
     };
-
-    return this.httpWrapper.get('student/'+student.id+'/courses', {params: params}).pipe(map((res: {data: any[], meta: MetaPagination}) => {
-      let courses: CourseStudent[] = res.data.map(courseStudent => new CourseStudent(courseStudent));
+    
+    return this.httpWrapper.get('student/courses', {params: params}).pipe(map((res: {data: any[], meta: MetaPagination}) => {
+      let courses: Course[] = res.data.map(course => new Course(course));
       return {
-        coursesStudent: courses,
+        courses: courses,
         meta: res.meta,
       };
     }));

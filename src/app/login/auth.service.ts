@@ -21,10 +21,25 @@ export class AuthService {
       email_or_username: emailOrUsername,
       password: password
     };
-    return this.http.post('login', { data: data }).pipe(map((result: { data: { api_token: string, is_admin: boolean}}) => {
+    return this.http.post('login', { data: data }).pipe(map((result: { data: { api_token: string, user: any}}) => {
         this.setSession(result.data.api_token);
+        this.localStorage.set('user', result.data.user);
       }));
   }
+
+  // Angular Service to handle Google Auth
+getGoogleAuthUrl() {
+  return this.http.get('google/login/url');
+}
+
+getAccessToken() {
+  return this.http.get('code');
+}
+loginWithGoogleCode(code: string) {
+  return this.http.post('google/auth/login', { auth_code: code });
+}
+
+  
 
   setSession(apiToken?: string) {
     if(apiToken) {
@@ -45,6 +60,7 @@ export class AuthService {
   logout() {
     this.loggedInUserService.clearUserDetails();
     this.localStorage.remove("api_token");
+    this.localStorage.remove("user");
     return this.http.post('logout');
   }
 

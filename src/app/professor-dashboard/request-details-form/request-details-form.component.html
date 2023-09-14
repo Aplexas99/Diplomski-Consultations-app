@@ -1,0 +1,63 @@
+<div class="form">
+    <h1 mat-dialog-title style="margin-bottom:5px;">
+        <span>Detalji zahtjeva za konzultacije</span>
+    </h1>
+    <div style="height:4px;margin-bottom:15px;">
+        <mat-progress-bar mode="query" style="width:100%;" *ngIf="isLoading"></mat-progress-bar>
+    </div>
+    
+    <mat-dialog-content>
+        <mat-dialog-content>
+            <mat-list>
+              <mat-list-item>
+                <span>Datum: </span>
+                <span class="detail">{{ data.request.schedule!.date | date:('dd.MM.yyyy') }}</span>
+              </mat-list-item>
+              <mat-list-item>
+                <span>Početak: </span>
+                <span class="detail">{{ data.request.startTime | date:('HH:mm') }}</span>
+              </mat-list-item>
+              <mat-list-item>
+                <span>Završetak: </span>
+                <span class="detail">{{ data.request.endTime | date:('HH:mm') }}</span>
+              </mat-list-item>
+              <mat-list-item>
+                <span>Vrsta: </span>
+                <span class="detail" *ngIf="data.request.type == 'ONLINE'"> Online</span>
+                <span class="detail" *ngIf="data.request.type == 'IN_PERSON'"> Uživo</span>
+              </mat-list-item>
+              <mat-list-item>
+                <span>Student: </span>
+                <span class="detail">{{ data.request.student!.user!.name }} {{ data.request.student!.user!.lastName }}</span>
+              </mat-list-item>
+              <mat-list-item>
+                <span>Napomena: </span>
+                <span class="detail">{{ data.request.note }}</span>
+              </mat-list-item>
+              <mat-list-item *ngIf="data.request.reason && data.request.status == 'rejected'">
+                <span>Razlog odbijanja: </span>
+                <span class="detail">{{ data.request.reason }}</span>
+              </mat-list-item>
+              <mat-list-item *ngIf="data.request.location && data.request.type == 'IN_PERSON' && data.request.status=='accepted'">
+                <span>Lokacija:</span>
+                <span class="detail">{{ data.request.location }}</span>
+              </mat-list-item>
+              <mat-list-item *ngIf="data.request.link && data.request.type == 'ONLINE' && data.request.status=='accepted'">
+                <span>Link:</span>
+                <span class="detail">{{ data.request.link }}</span>
+              </mat-list-item>
+            </mat-list>
+            <mat-divider></mat-divider>
+          </mat-dialog-content>
+          <mat-dialog-actions *ngIf="data.request.status == 'pending'">
+            <button mat-raised-button color="accent" (click)="onDecline()">Odbij</button>
+            <button mat-raised-button class="btn-validate" (click)="onAccept()">Prihvati</button>
+          </mat-dialog-actions>          
+    </mat-dialog-content>
+    
+    <mat-dialog-actions>
+        <div style="margin-left:auto;">
+            <button mat-raised-button (click)="cancel()">Nazad</button>
+        </div>
+    </mat-dialog-actions>
+    </div>

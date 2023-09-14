@@ -20,9 +20,9 @@ export class AdminAuthService {
       email_or_username: emailOrUsername,
       password: password
     };
-    return this.http.post('admin/login', { data: data }).pipe(map((result: { data: { admin_api_token: string}}) => {
+    return this.http.post('admin/login', { data: data }).pipe(map((result: { data: { admin_api_token: string, user: any}}) => {
         this.setSession(result.data.admin_api_token);
-        console.log(result.data.admin_api_token);
+        this.localStorage.set('user', result.data.user);
       }));
   }
 

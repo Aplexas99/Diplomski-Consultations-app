@@ -1,0 +1,66 @@
+<h1 mat-dialog-title style="margin-bottom:5px;">
+    <span>Pošalji zahtjev za konzultacije</span>
+</h1>
+<div style="height:4px;margin-bottom:15px;">
+    <mat-progress-bar mode="query" style="width:100%;" *ngIf="isLoading"></mat-progress-bar>
+</div>
+
+<mat-dialog-content>
+    <form [formGroup]="consultationForm">
+        <mat-form-field>
+            <input matInput [matDatepicker]="picker" placeholder="Pick a date" [min]="today" formControlName="date">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker [startAt]="startDate"></mat-datepicker>
+        </mat-form-field>
+        <mat-expansion-panel *ngIf="consultationForm.get('date')?.value">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Dodatni podaci
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+        <mat-form-field>
+            <mat-select placeholder="Start Time" formControlName="startTime" (selectionChange)="onStartTimeChange()">
+                <mat-option *ngFor="let time of startTimeSlots" [value]="time">
+                    {{ time }}
+                </mat-option>
+                <mat-option *ngIf="startTimeSlots.length < 1" [value]="null">
+                    Nema slobodnih termina
+                </mat-option>
+                <mat-option *ngIf="consultationForm.get('startTime')?.value" [value]="null">
+                    <mat-icon matSuffix (click)="clearStartTime()">clear</mat-icon>
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-select placeholder="End Time" formControlName="endTime" (selectionChange)="onEndTimeChange()">
+                <mat-option *ngFor="let time of endTimeSlots" [value]="time">
+                    {{ time }}
+                </mat-option>
+                <mat-option *ngIf="endTimeSlots.length < 1" [value]="null">
+                    Nema slobodnih termina
+                </mat-option>
+                <mat-option *ngIf="consultationForm.get('endTime')?.value" [value]="null">
+                    <mat-icon matSuffix (click)="clearEndTime()">clear</mat-icon>
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-select placeholder="Type" formControlName="type">
+                <mat-option value="in_person">Uživo</mat-option>
+                <mat-option value="online">Online</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <textarea matInput placeholder="Note" formControlName="note"></textarea>
+        </mat-form-field>
+        </mat-expansion-panel>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <div style="margin-left:auto;">
+        <button mat-button (click)="cancel()">Cancel</button>
+        <button mat-flat-button class="primary-btn" style="margin-left:10px;" (click)="save()"
+            [disabled]="isLoading">Send</button>
+    </div>
+</mat-dialog-actions>

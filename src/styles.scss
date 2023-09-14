@@ -17,6 +17,7 @@ $diplomski-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
 $diplomski-warn: mat.define-palette(mat.$red-palette);
+$diplomski-validated: mat.define-palette(mat.$green-palette);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
@@ -25,6 +26,7 @@ $diplomski-theme: mat.define-light-theme((
     primary: $diplomski-primary,
     accent: $diplomski-accent,
     warn: $diplomski-warn,
+    validated: $diplomski-validated,
   )
 ));
 
@@ -43,4 +45,18 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; color: hwb(
     outline: 2px solid #ebebeb!important;
     outline-offset: -3px!important;
     margin: 10px 0;
+  }
+
+  .text-right {
+    text-align: right!important;
+  }
+  .text-left {
+    text-align: left!important;
+  }
+  .text-center {
+    text-align: center!important;
+  }
+  .btn-validate {
+    background-color: #4caf50!important;
+    color: white!important;
   }

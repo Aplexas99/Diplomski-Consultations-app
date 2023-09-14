@@ -7,10 +7,6 @@ import { Router } from '@angular/router';
 import { CoursesTableFilter } from 'src/app/admin-module/courses/courses-table/courses-table.component';
 import { CourseService } from 'src/app/admin-module/courses/service/course.service';
 import { Course } from 'src/app/models/course';
-import { CourseStudent } from 'src/app/models/courseStudent';
-import { Role } from 'src/app/models/role';
-import { Student } from 'src/app/models/student';
-import { User } from 'src/app/models/user';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { SnackBarService } from 'src/app/services/snack-bar/snack-bar.service';
 
@@ -23,15 +19,14 @@ export class MyCoursesTableComponent {
 
   isLoading: boolean = false;
   displayedColumns: string[] = ['name', 'settings'];
-  dataSource!: MatTableDataSource<CourseStudent>;
+  dataSource!: MatTableDataSource<Course>;
   displayedSearchColumns: string[] = ['search-by-name', 'settings-filter-header'];
   
-
-
   filter: CoursesTableFilter = {
     name: '',
   };
   
+  userId?: number;
   pagination = {
     pageSizeOptions: [10, 50, 100, 200, 500],
     defaultPageSize: 50,
@@ -51,7 +46,6 @@ export class MyCoursesTableComponent {
   }
 
   ngOnInit(): void {
-    this.loadCourses();
   }
   ngAfterViewInit(): void {
     
@@ -59,13 +53,13 @@ export class MyCoursesTableComponent {
       if (this.paginator) {
         this.paginator.pageIndex = 0;
       }
-      this.loadCourses();
+      this.getCourses();
     });
 
 
     this.paginator?.page.subscribe(() => {
       window.scroll(0, 0);
-      this.loadCourses();
+      this.getCourses();
     });
 
     setTimeout(() => {
@@ -75,15 +69,10 @@ export class MyCoursesTableComponent {
     });
   }
 
-  loadStudents() {
-    this.isLoading = true;
-  }
 
-  loadCourses() {
+  getCourses() {
     this.isLoading = true;
-    let student = new Student();
-    student.id = 3;
-    this.courseService.getCoursesByStudent( student,
+    this.courseService.getCoursesForLoggedInUser(
       {
         filter: this.filter,
         perPage: this.paginator ? this.paginator.pageSize : this.pagination.defaultPageSize,
@@ -93,7 +82,7 @@ export class MyCoursesTableComponent {
       }
     ).subscribe({
       next: (data:any) => {
-        this.dataSource = new MatTableDataSource(data.coursesStudent);
+        this.dataSource = new MatTableDataSource(data.courses);
         this.pagination.totalResults = data.meta.total;
         this.isLoading = false;
       },
@@ -105,6 +94,7 @@ export class MyCoursesTableComponent {
   }
 
   openCourseDetails(course: Course) {
-    this.router.navigate(['student/courses', course.id, {isAdmin: false}]);
+    this.router.navigate(['/app/student/course', course.id]);
   }
+  
 }

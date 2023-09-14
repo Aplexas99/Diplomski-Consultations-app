@@ -1,0 +1,39 @@
+<div class="course-details-container">
+    <div class="course-info">
+        <h2>Course Details</h2>
+        <div class="info-section">
+            <div class="info-label">Name</div>
+            <div class="info-value">{{ course.id }}{{ ' '+ course.name }}</div>
+          </div>
+        <div class="info-section">
+            <div class="info-label">ECTS</div>
+            <div class="info-value"></div>
+        </div>
+        <div class="info-section">
+            <div class="info-label">Professors</div>
+            <div class="info-value"></div>
+        </div>
+        <div class="info-section">
+            <div class="info-label">Learning outcomes</div>
+            <div class="info-value"></div>
+        </div>
+        <div class="info-section">
+            <div class="info-label">Course content</div>
+            <div class="info-value"></div>
+        </div>
+    </div>
+
+    <div class="professors-list">
+        <h2>List of professors teaching this course</h2>
+        <mat-list *ngIf="!noProfessors" class="mat-list">
+            <mat-list-item class="list-item" *ngFor="let professor of course.professors">
+                <div class="professor-name">{{ professor.user!.name }}</div>
+                <button mat-icon-button class="align-right" (click)="openProfessorDetails(professor)">
+                    <mat-icon>arrow_forward_ios</mat-icon>
+                </button>
+            </mat-list-item>
+        </mat-list>
+        <ng-container *ngIf="noProfessors">
+            <div style="text-align: center;">The course is not taught by any professor.</div>
+        </ng-container>
+    </div>

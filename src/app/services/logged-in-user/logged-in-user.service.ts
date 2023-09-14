@@ -39,7 +39,7 @@ export class LoggedInUserService {
       }
     }): User => {
       this._user = new User(result.data);
-      return this._user!;
+      return this.user as User;
     }));
   }
 }

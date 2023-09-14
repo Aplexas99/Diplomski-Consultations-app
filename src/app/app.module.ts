@@ -4,7 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatOptionModule } from '@angular/material/core';
+import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -48,8 +48,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import { MsgDialogComponent } from './services/msg-dialog/msg-dialog/msg-dialog.component';
 import { AdminLayoutComponent } from './admin-module/admin-layout/admin-layout.component';
-
-
+import { StudentCourseDetailsComponent } from './courses/student-course-details/student-course-details.component';
+import { StudentProfessorDetailsComponent } from './courses/student-professor-details/student-professor-details.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { ConsultationRequestFormComponent } from './consultation-request-form/consultation-request-form.component';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { ProfessorDashboardComponent } from './professor-dashboard/professor-dashboard.component';
+import { RequestDetailsFormComponent } from './professor-dashboard/request-details-form/request-details-form.component';
+import { GoogleLoginComponent } from './google-login/google-login.component';
 
 @NgModule({
   declarations: [
@@ -80,6 +86,12 @@ import { AdminLayoutComponent } from './admin-module/admin-layout/admin-layout.c
     AppLayoutComponent,
     AdminLoginComponent,
     AdminLayoutComponent,
+    StudentCourseDetailsComponent,
+    StudentProfessorDetailsComponent,
+    ConsultationRequestFormComponent,
+    ProfessorDashboardComponent,
+    RequestDetailsFormComponent,
+    GoogleLoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -105,6 +117,9 @@ import { AdminLayoutComponent } from './admin-module/admin-layout/admin-layout.c
     MatListModule,
     MatCardModule,
     ReactiveFormsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatExpansionModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -15,6 +15,11 @@ import { AdminLoginComponent } from './login/adminLogin/admin-login.component';
 import { UsersTestComponent } from './users-test/users-test.component';
 import { AdminLayoutComponent } from './admin-module/admin-layout/admin-layout.component';
 import { LoginComponent } from './login/login.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { StudentCourseDetailsComponent } from './courses/student-course-details/student-course-details.component';
+import { StudentProfessorDetailsComponent } from './courses/student-professor-details/student-professor-details.component';
+import { ProfessorDashboardComponent } from './professor-dashboard/professor-dashboard.component';
+import { GoogleLoginComponent } from './google-login/google-login.component';
 
 const routes: Routes = [
   {
@@ -23,7 +28,7 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path:'login',
+    path: 'login',
     component: LoginComponent,
   },
   {
@@ -35,62 +40,76 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     component: AppLayoutComponent,
     children: [
-       {
+      {
         path: 'student',
+        component: DashboardComponent,
+      },
+      {
+        path: 'student/courses',
         canActivate: [],
         component: MyCoursesTableComponent,
-        children: [
-        ],
-       },
-       {
+      },
+      {
+        path: 'student/course/:id',
+        canActivate: [],
+        component: StudentCourseDetailsComponent,
+      },
+      {
+        path: 'student/professor/:id',
+        canActivate: [],
+        component: StudentProfessorDetailsComponent,
+      },
+      {
         path: 'professor',
         canActivate: [],
-        component: MyCoursesTableComponent,
-        children: [
-        ],
-       }
-      ],
+        component: ProfessorDashboardComponent,
+        children: [],
+      },
+      {
+        path: 'google-signin',
+        component: GoogleLoginComponent,
+      },
+    ],
   },
   {
     path: 'admin',
     canActivate: [AdminAuthGuard],
     component: AdminLayoutComponent,
     children: [
-        {
-          path: 'courses',
-          component: CoursesTableComponent,
-        },
-        {
-          path: 'courses/:id',
-          component: CourseDetailsComponent,
-        },
-        {
-          path: 'users',
-          component: UsersTableComponent,
-        },
-        {
-          path: 'professors',
-          component: ProfessorsTableComponent,
-        },
-        {
-          path: 'professors/:id',
-          component: ProfessorsDetailsComponent,
-        },
-        {
-          path: 'students',
-          component: StudentsTableComponent,
-        },
-        {
-          path: 'students/:id',
-          component: StudentDetailsComponent,
-        },
-        
-  {
-    path: 'student/courses/:id',
-    component: CourseDetailsComponent,
-  },
+      {
+        path: 'courses',
+        component: CoursesTableComponent,
+      },
+      {
+        path: 'courses/:id',
+        component: CourseDetailsComponent,
+      },
+      {
+        path: 'users',
+        component: UsersTableComponent,
+      },
+      {
+        path: 'professors',
+        component: ProfessorsTableComponent,
+      },
+      {
+        path: 'professors/:id',
+        component: ProfessorsDetailsComponent,
+      },
+      {
+        path: 'students',
+        component: StudentsTableComponent,
+      },
+      {
+        path: 'students/:id',
+        component: StudentDetailsComponent,
+      },
     ]
   },
+  {
+    path: '**',
+    redirectTo: 'app',
+  }
 ];
 
 @NgModule({

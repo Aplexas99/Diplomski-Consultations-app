@@ -1,0 +1,35 @@
+<div class="professor-details-container">
+    <div class="professor-info">
+        <h2>Professor Details</h2>
+        <div class="info-section">
+            <div class="info-label">First Name</div>
+            <div class="info-value">{{ professor.user?.name }}</div>
+        </div>
+        <div class="info-section">
+            <div class="info-label">Last Name</div>
+            <div class="info-value">{{ professor.user?.lastName }}</div>
+        </div>
+        <div class="info-section">
+            <div class="info-label">Email</div>
+            <div class="info-value">{{ professor.user?.email }}</div>
+        </div>
+        <div class="info-section align-right-text">
+            <button mat-raised-button class="primary-btn" (click)="openSendConsultationRequestForm()">Send consultation request</button>
+        </div>
+    </div>
+
+    <div class="courses-list">
+        <h2>Courses</h2>
+        <mat-list *ngIf="!noCourses" class="mat-list">
+                <mat-list-item class="list-item" *ngFor="let course of professor.courses">
+                    <div class="course-name">{{ course.name }}</div>
+                    <button mat-icon-button class="align-right" (click)="openCourseDetails(course)">
+                        <mat-icon>arrow_forward_ios</mat-icon>
+                    </button>
+                </mat-list-item>
+        </mat-list>
+        <ng-container *ngIf="noCourses">
+            <div style="text-align: center;">The professor is not teaching any courses.</div>
+        </ng-container>
+    </div>
+</div>

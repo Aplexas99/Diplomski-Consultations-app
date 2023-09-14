@@ -21,6 +21,20 @@ export class AppLayoutComponent implements OnInit {
 
 
   ngOnInit() {
+    this.loggedInUser.details().subscribe({
+      next: (user) => {
+        if(user.role?.name == 'Student'){
+          this.router.navigate([ 'app/student' ]);
+        } else if(user.role?.name == 'Professor'){
+          this.router.navigate([ 'app/professor' ]);
+        } else {
+          this.router.navigate([ 'login' ]);
+        }
+    },
+      error: (error) => {
+        this.errorHandler.process(error);
+      }
+    });
    }
 
   logout() {
